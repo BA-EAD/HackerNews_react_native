@@ -17,38 +17,60 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
+import {Provider} from 'react-redux';
+import {store} from './Redux/store';
+import {Colors} from './Theme';
+import {NavigationContainer} from '@react-navigation/native';
+import {AppNavigator} from './Navigation';
+import {AppScreenLoader, AppText} from './Components/Common';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {Provider, useSelector} from 'react-redux';
-import {RootState, store} from './Redux/store';
-
-const AppContainer = () => {
-  const newsid = useSelector((state: RootState) => state.news.newsids);
-  console.log('newsid', newsid);
-
-
+const AppContainer = (props: any) => {
+  const {isAppError} = props;
+  console.log('isAppError', isAppError);
+  
   return (
-    <View>
-      <Text>hello</Text>
-    </View>
+    <React.Fragment>
+      {isAppError ? (
+        <View style={{flex: 1}}>
+          <NavigationContainer>
+            <AppNavigator />
+          </NavigationContainer>
+        </View>
+      ) : (
+        <View>
+          <AppText data={'Oops... Internet is Gone'} />
+        </View>
+      )}
+    </React.Fragment>
   );
 }
 
 const App = () => {
+  const [connected, toggleNetwork] = React.useState(true);
   const isDarkMode = useColorScheme() === 'dark';
-  
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: isDarkMode ? Colors.white : Colors.white,
+    flex: 1,
   };
+
+  const handleConnectivityChange = async () => {
+    const checkConnectivity = await NetInfo.fetch();
+    const {isConnected} = checkConnectivity;
+    toggleNetwork(isConnected === null ? false : isConnected);
+  };
+
+  React.useEffect(() => {
+    NetInfo.addEventListener(() => {
+      handleConnectivityChange();
+    });
+  }, [connected]);
 
   return (
     <Provider store={store}>
       <SafeAreaView style={backgroundStyle}>
-        <StatusBar
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-          backgroundColor={backgroundStyle.backgroundColor}
-        />
-       <AppContainer />
+        <AppScreenLoader />
+        <AppContainer isAppError={connected} />
       </SafeAreaView>
     </Provider>
   );
