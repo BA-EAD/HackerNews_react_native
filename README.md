@@ -1,4 +1,4 @@
-# HackerNews_react_native
+# HackerNews Demo reactNative
 ## Environment setup
 
 Follow all the steps from:
