@@ -10,9 +10,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "compile": "rm -rf dist && tsc",
     "android:clean": "cd android && ./gradlew clean",
-    "android:assembleRelease": "cd android && ./gradlew assembleRelease",
-    "android:assembleDebug": "cd android && ./gradlew assembleDebug",
-    "android:release": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && npm run compile && npm run android:clean && npm run android:assembleRelease",
+    "andriod:update": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "android:debug": "npm run compile && npm run android:clean && npm run android:assembleDebug",
     "android:dev": "concurrently \"tsc -w\" \"npm run android:clean && react-native run-android\"",
     "ios:dev": "concurrently \"tsc -w\" \"react-native run-ios\"",
@@ -38,7 +36,6 @@
     "react-native-screens": "^3.18.2",
     "react-native-skeleton-placeholder": "^5.2.3",
     "react-native-svg": "^13.4.0",
-    "react-native-tab-view": "^3.3.0",
     "react-native-webview": "^11.23.1",
     "react-redux": "^8.0.4",
     "redux": "^4.2.0",
@@ -61,11 +58,14 @@
     "eslint": "^7.32.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "0.72.3",
-    "react-test-renderer": "18.1.0",
+    "react-test-renderer": "^18.1.0",
     "typescript": "^4.8.3"
   },
   "jest": {
     "preset": "react-native",
+    "transformIgnorePatterns": [
+      "node_modules/(?!@react-native|react-native)"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -73,6 +73,10 @@
       "jsx",
       "json",
       "node"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/config/fileMock.js"
+    }
   }
 }

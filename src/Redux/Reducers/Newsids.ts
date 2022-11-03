@@ -2,6 +2,10 @@ import {ACTION_TYPES} from '../../Actions';
 const {NEWS_ACTIONS, JOB_ACTIONS} = ACTION_TYPES;
 import {Newsstory} from '../../types';
 
+// create initialState like Default value of Variable
+// newids / jobids:- all News Stories id
+// newsItemsDetail / jobItemsDetail:- get detail from newsids
+// commentsItems: Comments of particular Story and handle by select
 const initialState = {
   newsids: Array<number>(),
   newsItemsDetail: Array<Newsstory>(),
@@ -12,6 +16,7 @@ const initialState = {
   isIndicator: false,
 };
 
+// create Slice to handle the all data into store
 const NewsIdsSlice = (
   state = initialState,
   action: {type: any; payload: any},

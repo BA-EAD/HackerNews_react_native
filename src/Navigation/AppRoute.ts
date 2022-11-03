@@ -1,3 +1,4 @@
+// handle all Route Constant
 const Route = {
   News: 'News',
   NewsFeed: 'NewsFeed',

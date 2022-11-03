@@ -3,6 +3,7 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import React from 'react';
 import { Metrics } from '../../Theme';
 
+// Create Skeleton for Loader purpose
 const SkeletonPlaceHolder = () => {
   return (
     <SkeletonPlaceholder borderRadius={4}>
@@ -42,7 +43,8 @@ const SkeletonPlaceHolderTitle = () => {
   );
 };
 
-export const SekeltonLoadingView = () => {
+// View for Loader
+const SekeltonLoadingView = () => {
   return (
     <View style={{marginTop: Metrics.doubleBaseMargin}}>
       <View style={{marginVertical: Metrics.baseMargin + 5}}>
@@ -66,5 +68,6 @@ export const SekeltonLoadingView = () => {
   );
 }
 
+export default SekeltonLoadingView;
 
 const styles = StyleSheet.create({});

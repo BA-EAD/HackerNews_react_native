@@ -1,4 +1,4 @@
-import {Pressable, StyleSheet, View} from 'react-native';
+import {Linking, Pressable, StyleSheet, View} from 'react-native';
 import React from 'react'
 import {Colors, Metrics} from '../../Theme';
 import {AppText} from '../../Components/Common';
@@ -8,12 +8,13 @@ import {pathOr, propOr} from 'ramda';
 import {Newsstory} from '../../types';
 import { BackArrow } from '../../SVGImage';
 
+// Screen for open news
 const NewsScreen = (props: any) => {
   const navigate = useNavigation();
   const data = pathOr({} as Newsstory, ['route', 'params', 'news'], props);
   console.log(data as Newsstory);
   console.log((data as Newsstory).url);
-  
+
   return (
     <View style={styles.screenContainer}>
       <View style={{flexDirection: 'row'}}>
@@ -30,16 +31,23 @@ const NewsScreen = (props: any) => {
           <BackArrow />
         </Pressable>
       </View>
-      <View style={styles.flex}>
+      <View style={styles.screenContainer}>
         {(data as Newsstory).url ? (
           <WebView
+            javaScriptEnabled={true}
             source={{uri: (data as Newsstory).url ?? ''}}
             startInLoadingState={true}
+            onNavigationStateChange={event => {
+              if (event.url !== (data as Newsstory).url) {
+                Linking.openURL(event.url);
+              }
+            }}
           />
         ) : (
           <WebView
             originWhitelist={['*']}
             textZoom={100}
+            textInteractionEnabled={true}
             source={{html: (data as Newsstory).text ?? ''}}
           />
         )}

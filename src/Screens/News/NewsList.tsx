@@ -18,20 +18,24 @@ import {Colors, Fonts, Metrics} from '../../Theme';
 import {Newsstory} from '../../types';
 
 
-
+// Screen of News and Job story list
 const NewsList = () => {
   const stateData: any = useSelector(state => state);
   const navigate = useNavigation();
   const dispatch = useTypedDispatch();
   const [selectCategory, setCategory] = React.useState(0);
+  const [isReferesh, setReferesh] = React.useState(false);
 
-  console.log(stateData.NewsIdsSlice.jobItemsDetail);
-  console.log(stateData.NewsIdsSlice.newsItemsDetail);
-  
-  
   React.useEffect(() => {
     dispatch(getHackerNews(selectCategory));
   }, [selectCategory]);
+
+  React.useEffect(() => {
+    setReferesh(false);
+  }, [
+    stateData.NewsIdsSlice.newsItemsDetail,
+    stateData.NewsIdsSlice.jobItemsDetail,
+  ]);
 
   const renderFooter = () => {
     return (
@@ -117,6 +121,12 @@ const NewsList = () => {
           dispatch(getLoadMoreItem(selectCategory));
         }}
         ListFooterComponent={renderFooter}
+        refreshing={isReferesh}
+        onRefresh={() => {
+          setReferesh(true);
+          dispatch(getHackerNews(selectCategory));
+        }}
+        testID="newsFlatList"
       />
     </View>
   );

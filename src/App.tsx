@@ -24,18 +24,22 @@ import {Colors} from './Theme';
 import {NavigationContainer} from '@react-navigation/native';
 import {AppNavigator} from './Navigation';
 import {AppScreenLoader, AppText} from './Components/Common';
+import ErrorBountry from './Components/Common/ErrorBountry';
 
+// Start Navigataion and ErrorBountry will manage Error
 const AppContainer = (props: any) => {
   const {isAppError} = props;
   console.log('isAppError', isAppError);
-  
+
   return (
     <React.Fragment>
       {isAppError ? (
         <View style={{flex: 1}}>
-          <NavigationContainer>
-            <AppNavigator />
-          </NavigationContainer>
+          <ErrorBountry>
+            <NavigationContainer>
+              <AppNavigator />
+            </NavigationContainer>
+          </ErrorBountry>
         </View>
       ) : (
         <View>
@@ -44,8 +48,9 @@ const AppContainer = (props: any) => {
       )}
     </React.Fragment>
   );
-}
+};
 
+// Main Root of Application
 const App = () => {
   const [connected, toggleNetwork] = React.useState(true);
   const isDarkMode = useColorScheme() === 'dark';
@@ -54,6 +59,7 @@ const App = () => {
     flex: 1,
   };
 
+  //Observe Internet connection available or not
   const handleConnectivityChange = async () => {
     const checkConnectivity = await NetInfo.fetch();
     const {isConnected} = checkConnectivity;

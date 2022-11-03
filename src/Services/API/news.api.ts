@@ -1,6 +1,7 @@
 import {axiosInstance} from './api.config';
 import APP_ENDPOINTS from './endpoints';
 
+// Get all News Ids
 const getNewsStorysId = async (index: number) => {
   try {
     const response = await axiosInstance.get(
@@ -12,6 +13,7 @@ const getNewsStorysId = async (index: number) => {
   }
 };
 
+// Get Detail from Ids
 const getNewsStoryDetail = async (id: number) => {
   return axiosInstance.get(`item/${id}.json?print=pretty`);
 };

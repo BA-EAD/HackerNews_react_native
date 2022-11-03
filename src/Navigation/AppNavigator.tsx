@@ -3,11 +3,13 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NewsList, NewsScreen} from '../Screens/News';
 import initApiConfig from '../Services/API/api.config';
 import {CommentsList} from '../Screens/Comments';
-import { ROUTE } from '.';
+import {ROUTE} from '.';
 
 const Stack = createNativeStackNavigator();
 
+// All Route are manage here
 const AppNavigator = () => {
+  // Api Calling initalize by 'Axios'
   initApiConfig();
 
   return (

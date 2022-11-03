@@ -11,6 +11,7 @@ import { Newsstory } from '../../types';
 import { ROUTE } from '../../Navigation';
 import { BackArrow } from '../../SVGImage';
 
+// Screen for commnets list of Story
 const CommentList = (props: any) => {
   const stateData: any = useSelector(state => state);
   const navigate = useNavigation();

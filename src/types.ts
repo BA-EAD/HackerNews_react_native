@@ -10,4 +10,5 @@ export type Newsstory = {
   type: string;
   url?: string;
   deleted?: boolean;
+  dead?: boolean;
 };

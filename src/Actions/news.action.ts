@@ -4,11 +4,13 @@ import {NewsApiHandler} from '../Services';
 import { Newsstory } from '../types';
 import { toggleAppScreenLoader } from './appLoader.action';
 
-const getStateData = (getState: any) => getState()
+// Get Store data
+const getStateData = (getState: any) => getState();
 
+// Get news and job story ids and put into store
+// Manage all data from response
 export const getHackerNews = (index: number) => {
   return async (dispatch: any, getState: any) => {
-    console.log('index------', index);
     dispatch(toggleAppScreenLoader(true));
     clearAllData(dispatch);
     const newsResponse = await NewsApiHandler.getNewsStorysId(index);
@@ -29,11 +31,13 @@ export const getHackerNews = (index: number) => {
   }
 };
 
-
+// Get News Detail from ids
 export const getNewsItemDetail = (id: number) => {
   return NewsApiHandler.getNewsStoryDetail(id);
 };
 
+// Manage all news and job story detail
+// Old and new load
 const getAllNewsDetailFromIds = async (
   ids: Array<number>,
   dispatch: any,
@@ -53,17 +57,17 @@ const getAllNewsDetailFromIds = async (
       arrayNewsStory.push(response.data as Newsstory);
     }),
   );
+  arrayNewsStory.sort((a, b) => b.time - a.time);
   dispatch({
     type:
       index === 0
         ? ACTION_TYPES.NEWS_ACTIONS.SET_NEWS_STORYS_ITEM
         : ACTION_TYPES.JOB_ACTIONS.SET_JOB_STORYS_ITEM,
-    payload: [...oldNewsItems, ...arrayNewsStory].sort(
-      (a, b) => b.time - a.time,
-    ),
+    payload: [...oldNewsItems, ...arrayNewsStory],
   });
 };
 
+// Handle LoadMore functionality
 export const getLoadMoreItem = (index: number) => {
   return async (dispatch: any, getState: any) => {
     setIndicatorOn(dispatch, true);
@@ -89,7 +93,7 @@ export const getLoadMoreItem = (index: number) => {
   };
 };
 
-
+// Get Comments from Stroy 'Kids' and get Detail
 export const getCommentItems = (ids: Array<number>) => {
   return async (dispatch: any, getState: any) => {
     dispatch(toggleAppScreenLoader(true));
@@ -114,6 +118,7 @@ export const getCommentItems = (ids: Array<number>) => {
   };
 };
 
+// Clear all Data from Store
 const clearAllData = (dispatch: any) => {
   dispatch({
     type: ACTION_TYPES.NEWS_ACTIONS.SET_COMMENTS_ITEM,

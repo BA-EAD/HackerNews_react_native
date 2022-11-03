@@ -1,3 +1,5 @@
+// All Action type will handle with Store
+// easily Access
 const TOGGLE_APP_LOADING = 'TOGGLE_APP_LOADING';
 
 const NEWS_ACTIONS = {

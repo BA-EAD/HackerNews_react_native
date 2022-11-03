@@ -27,6 +27,7 @@ type AppTextProps = {
   otherStyle?: object;
 };
 
+// Create Component and uses multiple time
 const AppText = (props: AppTextProps) => {
   const {otherStyle, numberofLine = 0} = props;
   const style = {

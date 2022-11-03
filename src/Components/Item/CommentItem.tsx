@@ -17,7 +17,13 @@ const CommentItem = (props: CommentItemProps) => {
     <View
       style={[
         styles.commentSection,
-        {display: commentItem.deleted ? 'none' : 'flex'},
+        {
+          display: commentItem.deleted
+            ? 'none'
+            : commentItem.dead
+            ? 'none'
+            : 'flex',
+        },
       ]}>
       <View>
         <AppText
