@@ -44,5 +44,6 @@ to "Create a new application"  block for the platforms you want to run
 
 1. Axios => api
 2. Redux, Redux-hooks => Manage Data
+3. using ErrorBountry. if get some Error handle by it
 
 -------------------------------------------------------------------------------------
